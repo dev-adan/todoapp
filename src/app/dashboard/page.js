@@ -1,14 +1,14 @@
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 import prisma from '@/lib/prisma';
 import CreateTodo from '@/components/todos/create-todo';
 import TodoList from '@/components/todos/todo-list';
+import SignOutButton from '@/components/auth/sign-out-button';
 
 export default async function DashboardPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
-  if (!session) {
+  if (!session?.user) {
     redirect('/');
   }
 
@@ -32,14 +32,7 @@ export default async function DashboardPage() {
                 Welcome back, {session.user.name || session.user.email}
               </p>
             </div>
-            <form action="/api/auth/signout" method="POST">
-              <button
-                type="submit"
-                className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-              >
-                Sign out
-              </button>
-            </form>
+            <SignOutButton />
           </div>
 
           <CreateTodo />

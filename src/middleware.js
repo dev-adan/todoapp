@@ -1,19 +1,7 @@
-import { withAuth } from 'next-auth/middleware';
+import { auth } from '@/auth';
 
-export default withAuth({
-  callbacks: {
-    authorized: ({ req, token }) => {
-      const pathname = req.nextUrl.pathname;
-      
-      // Allow access to login page without authentication
-      if (pathname === '/') return true;
-      
-      // Require authentication for other pages
-      return !!token;
-    },
-  },
-});
+export default auth;
 
 export const config = {
-  matcher: ['/', '/dashboard/:path*', '/edit/:path*']
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

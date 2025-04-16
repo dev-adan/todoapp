@@ -15,20 +15,25 @@ export default function LoginForm() {
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const response = await signIn('credentials', {
-      email: formData.get('email'),
-      password: formData.get('password'),
-      redirect: false,
-    });
+    try {
+      const response = await signIn('credentials', {
+        email: formData.get('email'),
+        password: formData.get('password'),
+        redirect: false,
+      });
 
-    if (response?.error) {
-      setError('Invalid credentials');
+      if (response?.error) {
+        setError('Invalid credentials');
+        return;
+      }
+
+      router.refresh();
+      router.push('/dashboard');
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+    } finally {
       setLoading(false);
-      return;
     }
-
-    router.push('/dashboard');
-    router.refresh();
   }
 
   return (

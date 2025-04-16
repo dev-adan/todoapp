@@ -43,7 +43,7 @@ export default function CreateTodo() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Add a new todo..."
-          className="flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
+          className="flex-1 rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-500"
           disabled={loading}
         />
         <button

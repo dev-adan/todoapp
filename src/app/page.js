@@ -1,12 +1,11 @@
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
 import AuthForm from '@/components/auth/auth-form';
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
-  if (session) {
+  if (session?.user) {
     redirect('/dashboard');
   }
 

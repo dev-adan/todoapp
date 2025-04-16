@@ -49,8 +49,8 @@ export default function SignUpForm() {
         throw new Error('Failed to sign in after registration');
       }
 
-      router.push('/dashboard');
       router.refresh();
+      router.push('/dashboard');
     } catch (error) {
       setError(error.message);
     } finally {
