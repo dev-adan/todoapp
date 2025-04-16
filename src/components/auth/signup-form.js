@@ -68,7 +68,8 @@ export default function SignUpForm() {
           type="text"
           name="name"
           id="name"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-500"
+          placeholder="Enter your name"
         />
       </div>
       <div>
@@ -80,7 +81,8 @@ export default function SignUpForm() {
           name="email"
           id="email"
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-500"
+          placeholder="Enter your email"
         />
       </div>
       <div>
@@ -92,7 +94,8 @@ export default function SignUpForm() {
           name="password"
           id="password"
           required
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none text-gray-900 placeholder-gray-500"
+          placeholder="Create a password"
         />
       </div>
       {error && (

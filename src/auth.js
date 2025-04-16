@@ -44,10 +44,35 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, profile }) {
       if (user) {
         token.id = user.id;
       }
+      
+      // Handle Google OAuth user creation
+      if (account?.provider === 'google') {
+        try {
+          const existingUser = await prisma.user.findUnique({
+            where: { email: token.email },
+          });
+
+          if (!existingUser) {
+            const newUser = await prisma.user.create({
+              data: {
+                email: token.email,
+                name: token.name,
+                image: token.picture,
+              },
+            });
+            token.id = newUser.id;
+          } else {
+            token.id = existingUser.id;
+          }
+        } catch (error) {
+          console.error('Error handling Google sign in:', error);
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
@@ -59,5 +84,28 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
   },
   pages: {
     signIn: '/',
+  },
+  events: {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === 'google') {
+        try {
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email },
+          });
+
+          if (!existingUser) {
+            await prisma.user.create({
+              data: {
+                email: user.email,
+                name: user.name,
+                image: user.image,
+              },
+            });
+          }
+        } catch (error) {
+          console.error('Error in signIn event:', error);
+        }
+      }
+    },
   },
 });
